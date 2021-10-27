@@ -29,6 +29,13 @@ slides.forEach((slide, index) => {
     
 })
 
+//Disable context menu
+// window.oncontextmenu = function (event) {
+//     event.preventDefault()
+//     event.stopPropagation()
+//     return false
+// }
+
 function touchStart(index){
     return function(event){
         isDragging = true
