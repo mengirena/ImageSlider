@@ -38,7 +38,10 @@ slides.forEach((slide, index) => {
 
 function touchStart(index){
     return function(event){
+        currentIndex = index
+        startPos = getPositionX(event)
         isDragging = true
+
     }
 }
 
@@ -50,4 +53,8 @@ function touchMove(){
     if (isDragging){
         console.log("move")
     }
+}
+
+function getPositionX(event) {
+    return event.type.includes('mouse') ? event.pageX : event.touches[0].clientX
 }
