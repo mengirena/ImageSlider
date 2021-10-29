@@ -42,6 +42,8 @@ function touchStart(index){
         startPos = getPositionX(event)
         isDragging = true
 
+        //request animation frame, perform an animation, request a call to a specific function
+        animationID = requestAnimationFrame(animation)
     }
 }
 
@@ -49,12 +51,22 @@ function touchEnd(){
     isDragging = false
 }
 
-function touchMove(){
+function touchMove(event){
     if (isDragging){
         console.log("move")
+        const currentPosition = getPositionX(event)
     }
 }
 
 function getPositionX(event) {
     return event.type.includes('mouse') ? event.pageX : event.touches[0].clientX
+}
+
+function animation(){
+    setSliderPosition()
+    if (isDragging) requestAnimationFrame(animation)
+}
+
+function setSliderPosition() {
+    slider.style.transform = `translateX(${currentTranslate}px)`
 }
