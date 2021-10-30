@@ -49,12 +49,14 @@ function touchStart(index){
 
 function touchEnd(){
     isDragging = false
+    cancelAnimationFrame(animationID)
 }
 
 function touchMove(event){
     if (isDragging){
         console.log("move")
         const currentPosition = getPositionX(event)
+        currentTranslate = prevTranslate + currentPosition - startPos
     }
 }
 
