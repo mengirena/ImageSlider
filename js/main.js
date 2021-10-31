@@ -40,6 +40,7 @@ function touchStart(index){
     return function(event){
         currentIndex = index
         startPos = getPositionX(event)
+        //console.log("start", startPos)
         isDragging = true
 
         //request animation frame, perform an animation, request a call to a specific function
@@ -55,19 +56,23 @@ function touchEnd(){
     //snap in the next slide
     const movedBy = currentTranslate - prevTranslate
    
-    if (movedBy < -100 && currentTranslate < slide.length -1)
-    currentTranslate += 1
+    if (movedBy < -100 && currentIndex < slides.length -1)
+    currentIndex += 1
     
-    if (movedBy > 100 && currentTranslate > 0) currentTranslate -= 1
+    if (movedBy > 100 && currentIndex > 0) currentIndex -= 1
     
-    
+    setPositionByIndex()
+
+    //regular slide in
+    //prevTranslate = currentTranslate
+
 
     slider.classList.remove('grabbing')
 }
 
 function touchMove(event){
     if (isDragging){
-        console.log("move")
+        //console.log("move")
         const currentPosition = getPositionX(event)
         currentTranslate = prevTranslate + currentPosition - startPos
     }
@@ -84,4 +89,10 @@ function animation(){
 
 function setSliderPosition() {
     slider.style.transform = `translateX(${currentTranslate}px)`
+}
+
+function setPositionByIndex() {
+    currentTranslate = currentIndex * -window.innerWidth
+    prevTranslate = currentTranslate
+    setSliderPosition()
 }
