@@ -29,7 +29,7 @@ slides.forEach((slide, index) => {
     
 })
 
-//Disable context menu
+//Disable context menu, the value of .oncontextmenu is a function which receives an event object as its argument 
 // window.oncontextmenu = function (event) {
 //     event.preventDefault()
 //     event.stopPropagation()
@@ -43,13 +43,26 @@ function touchStart(index){
         isDragging = true
 
         //request animation frame, perform an animation, request a call to a specific function
-        animationID = requestAnimationFrame(animation)
+        animationID = requestAnimationFrame(animation) //call it once to kick it off. It also returns an ID which can be used to cancel it. 
+        slider.classList.add('grabbing')
     }
 }
 
 function touchEnd(){
     isDragging = false
     cancelAnimationFrame(animationID)
+
+    //snap in the next slide
+    const movedBy = currentTranslate - prevTranslate
+   
+    if (movedBy < -100 && currentTranslate < slide.length -1)
+    currentTranslate += 1
+    
+    if (movedBy > 100 && currentTranslate > 0) currentTranslate -= 1
+    
+    
+
+    slider.classList.remove('grabbing')
 }
 
 function touchMove(event){
@@ -66,7 +79,7 @@ function getPositionX(event) {
 
 function animation(){
     setSliderPosition()
-    if (isDragging) requestAnimationFrame(animation)
+    if (isDragging) requestAnimationFrame(animation) //call the function recursively
 }
 
 function setSliderPosition() {
